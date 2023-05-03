@@ -1,0 +1,34 @@
+FROM ubuntu:22.04
+
+
+
+
+# Set the working directory to /app
+WORKDIR '/app'
+
+
+
+# Copy package.json to the working directory
+COPY package.json .
+
+
+
+# Install any needed packages specified in package.json
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends mysql-client \
+&& rm -rf /var/lib/apt/lists/*
+
+
+
+# Copying the rest of the code to the working directory
+COPY . .
+
+
+
+# Make port 3000 available to the world outside this container
+EXPOSE 8000
+
+
+
+# Run index.js when the container launches
+CMD ["node", "index.js"]
